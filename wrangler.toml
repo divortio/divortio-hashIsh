@@ -25,10 +25,10 @@ html = true
 css = true
 js = true
 
+[[routes]]
+pattern = "hashish.tools.divort.io"
+custom_domain = true
 
-routes = [
-    { pattern = "hashish.tools.divort.io", custom_domain = true }
-]
 
 [[headers]]
 for = "/*"
