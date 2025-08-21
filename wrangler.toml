@@ -1,0 +1,44 @@
+name = "divortio-hashish"
+main = "src/index.js"
+compatibility_date = "2025-08-01"
+
+# This binds the './public' directory to your Worker, making the assets
+# available via the `env.ASSETS` service binding.
+[assets]
+binding = "ASSETS"
+bucket = "./public"
+
+compatibility_flags = ["nodejs_compat", "nodejs_als"]
+
+workers_dev = false
+preview_urls = false
+
+[placement]
+mode = "smart"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[minify]
+html = true
+css = true
+js = true
+
+[assets]
+binding = "ASSETS"
+directory = "./public"
+
+routes = [
+    { pattern = "hashish.tools.divort.io", custom_domain = true }
+]
+
+[[headers]]
+for = "/*"
+[headers.values]
+"Cache-Control" = "public, max-age=300, immutable"
+
+[[headers]]
+for = "*.html"
+[headers.values]
+"Cache-Control" = "public, max-age=120, immutable"

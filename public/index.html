@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hashIsh.js - Consistently Potent, Perfectly Stable</title>
+    <link rel="icon" href="./icons/logo.svg" type="image/svg+xml">
+    <script src="./vendor/js/tailwind.js"></script>
+    <link href="./vendor/fonts/google-fonts.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+            color: #d1d5db; /* Light gray text */
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glass-effect {
+            background: rgba(31, 41, 55, 0.5); /* Semi-transparent dark gray */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(55, 65, 81, 0.3);
+        }
+
+        .code-block-wrapper {
+            position: relative;
+        }
+
+        .code-block {
+            background-color: #1f2937; /* Darker gray for code */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            color: #e5e7eb;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .code-block .keyword {
+            color: #818cf8;
+        }
+
+        .code-block .string {
+            color: #a5b4fc;
+        }
+
+        .code-block .comment {
+            color: #6b7280;
+        }
+
+        .code-block .variable {
+            color: #c4b5fd;
+        }
+
+        .code-block .param {
+            color: #93c5fd;
+        }
+
+        .code-block .type {
+            color: #6ee7b7;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: #d1d5db;
+            padding: 0.375rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            line-height: 0;
+        }
+
+        .copy-btn:hover {
+            background-color: #4b5563;
+        }
+
+        .copy-feedback {
+            position: absolute;
+            top: 0.875rem;
+            right: 3.5rem;
+            font-size: 0.75rem;
+            color: #22c55e;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .tab.active {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        /* Custom slider styles */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #4b5563;
+            border-radius: 5px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #22c55e;
+            cursor: pointer;
+            margin-top: -8px;
+            border: 2px solid #111827;
+        }
+
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #4b5563;
+            border-radius: 5px;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #22c55e;
+            cursor: pointer;
+            border: 2px solid #111827;
+        }
+
+        details[open] .details-arrow {
+            transform: rotate(180deg);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Main Container -->
+<div class="relative min-h-screen overflow-x-hidden">
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+        <div class="hero-bg">
+            <canvas id="hero-canvas"></canvas>
+        </div>
+        <div class="z-10 p-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-green-400 mb-2 tracking-wider">hashIsh.js</h2>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter">Consistently Potent.<br>Perfectly
+                Stable.</h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-gray-300">
+                <span class="font-semibold text-green-400">hashIsh.js</span> is a lightweight, deterministic hashing
+                library<br> which always delivers a unique yet consistent, predictable high...quality hash.
+            </p>
+            <a href="#lab"
+               class="mt-8 inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-600/30">
+                Roll your own Hash
+            </a>
+            <p class="mt-4 text-xs text-gray-500">Not intended for cryptographic use. Please hash responsibly.</p>
+        </div>
+    </section>
+
+    <main class="relative z-10">
+        <!-- Key Features Section -->
+        <section id="features" class="py-20 sm:py-32 bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white">✨ The Strain Profile</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">A breakdown of our library's unique
+                        characteristics.</p>
+                </div>
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="glass-effect p-6 rounded-2xl text-center">
+                        <div class="flex justify-center items-center h-16 w-16 rounded-full bg-green-900/50 mx-auto mb-4">
+                            <img src="./icons/feature-lightweight.svg" alt="Lightweight icon">
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Lightweight & Fast</h3>
+                        <p class="mt-2 text-gray-400">Our library is a fast-acting sativa. It's lean, efficient, and
+                            won't bog down your application.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="glass-effect p-6 rounded-2xl text-center">
+                        <div class="flex justify-center items-center h-16 w-16 rounded-full bg-green-900/50 mx-auto mb-4">
+                            <img src="./icons/feature-stable.svg" alt="Stable icon">
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Deterministic & Stable</h3>
+                        <p class="mt-2 text-gray-400">Think of it as a top-shelf strain. Our hash is pure, potent, and
+                            delivers the exact same predictable result, every single time.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="glass-effect p-6 rounded-2xl text-center">
+                        <div class="flex justify-center items-center h-16 w-16 rounded-full bg-green-900/50 mx-auto mb-4">
+                            <img src="./icons/feature-unique.svg" alt="Unique icon">
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Extremely Unique</h3>
+                        <p class="mt-2 text-gray-400">By default, there is a &lt; 0.0001% risk of collision. (Chance of
+                            a bad trip)</p>
+                    </div>
+                    <!-- Feature 4 -->
+                    <div class="glass-effect p-6 rounded-2xl text-center">
+                        <div class="flex justify-center items-center h-16 w-16 rounded-full bg-green-900/50 mx-auto mb-4">
+                            <img src="./icons/feature-secure.svg" alt="Secure icon">
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Non-Cryptographic</h3>
+                        <p class="mt-2 text-gray-400">Perfect for checksums and identifiers. Please don't use it for
+                            your passwords or state secrets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Lab: Interactive Demo -->
+        <section id="lab" class="py-20 sm:py-32">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white">Roll Your Own Hash</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Experience the consistency first-hand.
+                        <br>Modify the input and watch the stable hash generate in real-time.</p>
+                </div>
+
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left Column: Input -->
+                    <div class="glass-effect p-6 rounded-2xl">
+                        <h3 class="text-2xl font-semibold text-white mb-4">The Grinder (Input)</h3>
+                        <div class="flex space-x-2 mb-4 bg-gray-800 p-1 rounded-lg">
+                            <button class="tab active flex-1 py-2 px-4 rounded-md text-sm font-semibold transition"
+                                    data-type="object">Object
+                            </button>
+                            <button class="tab flex-1 py-2 px-4 rounded-md text-sm font-semibold transition"
+                                    data-type="string">String
+                            </button>
+                            <button class="tab flex-1 py-2 px-4 rounded-md text-sm font-semibold transition"
+                                    data-type="array">Array
+                            </button>
+                            <button class="tab flex-1 py-2 px-4 rounded-md text-sm font-semibold transition"
+                                    data-type="number">Number
+                            </button>
+                        </div>
+
+                        <div id="input-container">
+                            <textarea id="text-input" rows="8"
+                                      class="w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg text-gray-200 font-mono focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"></textarea>
+                            <input id="number-input" type="number" value="420"
+                                   class="hidden w-full p-3 bg-gray-900/50 border border-gray-700 rounded-lg text-gray-200 font-mono focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2 italic">Note: For objects, key order doesn't matter. We've
+                            got it sorted.</p>
+
+                        <div class="mt-6">
+                            <label for="length-slider" class="block text-lg font-semibold text-white mb-2">Potency
+                                (Length): <span id="length-value" class="font-bold text-green-400">12</span></label>
+                            <input id="length-slider" type="range" min="12" max="64" value="12" class="w-full">
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Output -->
+                    <div class="glass-effect p-6 rounded-2xl flex flex-col">
+                        <h3 class="text-2xl font-semibold text-white mb-4">The Output</h3>
+                        <div>
+                            <label class="block text-lg font-semibold text-white mb-2">Your Stable Hash:</label>
+                            <div class="relative">
+                                <input id="hash-output" type="text" readonly
+                                       class="w-full p-4 pr-12 bg-gray-900/50 border border-gray-700 rounded-lg text-green-400 font-mono text-lg break-all">
+                                <button id="copy-button"
+                                        class="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-white transition"
+                                        title="Copy to clipboard">
+                                    <img src="./icons/copy.svg" alt="Copy Icon" class="w-5 h-5">
+                                </button>
+                            </div>
+                            <span id="copy-feedback" class="text-sm text-green-500 mt-2 opacity-0 transition-opacity">Copied!</span>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-700 flex-grow flex flex-col justify-center">
+                            <h4 class="text-xl font-bold text-white">Always the Same High.</h4>
+                            <p class="mt-2 text-gray-400">No matter how many times you process the same input, you'll
+                                always get the exact same, predictable result. It’s a clean, consistent experience,
+                                every time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strain Profile Section -->
+                <div class="max-w-6xl mx-auto mt-12 glass-effect p-6 sm:p-8 rounded-2xl">
+                    <h3 class="text-3xl font-bold text-white mb-6 text-center">Strain Profile</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <!-- Type -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-400">Type</h4>
+                            <p id="strain-type" class="text-2xl font-bold text-green-400 mt-1 capitalize">Object</p>
+                            <p id="input-size" class="text-xs text-gray-500">128 Bytes</p>
+                        </div>
+                        <!-- Speed -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-400">Generation Speed</h4>
+                            <p id="speed-stat" class="text-2xl font-bold text-green-400 mt-1">≈ 0.05ms</p>
+                            <p class="text-xs text-gray-500">hashIsh.js</p>
+                        </div>
+                        <!-- Collision Risk -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-400">Risk of Collision</h4>
+                            <p id="collision-stat" class="text-2xl font-bold text-green-400 mt-1">&lt; 0.0001%</p>
+                            <p class="text-xs text-gray-500">Chance of a bad trip.</p>
+                        </div>
+                        <!-- Potency -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-400">Potency</h4>
+                            <p id="potency-level" class="text-2xl font-bold text-green-400 mt-1">12</p>
+                            <p class="text-xs text-gray-500">Hash Length</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Started Section -->
+        <section id="get-started" class="py-20 sm:py-32">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white">🚀 Ready to Roll?</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Integrate hashIsh.js into your project.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-semibold text-white mb-4">Installation</h3>
+                    <p class="text-gray-400 mb-4">Choose your preferred method to get started.</p>
+
+                    <!-- Option 1: Git Clone -->
+                    <h4 class="text-lg font-semibold text-gray-300 mb-2">Option 1: Clone from GitHub</h4>
+                    <div class="code-block-wrapper mb-8">
+                        <div id="git-clone-code" class="code-block">git clone https://github.com/divortio/divortio-hashIsh.git
+                        </div>
+                        <button class="copy-btn" data-target="git-clone-code" title="Copy command">
+                            <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                        </button>
+                        <span class="copy-feedback">Copied!</span>
+                    </div>
+
+                    <!-- Option 2: Copy Source Code -->
+                    <h4 class="text-lg font-semibold text-gray-300 mb-2">Option 2: Copy Source Code</h4>
+                    <details class="mb-8 bg-gray-900/50 border border-gray-700 rounded-lg">
+                        <summary
+                                class="p-4 cursor-pointer font-semibold text-white hover:bg-gray-800/50 rounded-t-lg flex justify-between items-center">
+                            <span>hashIsh.js (Source Code)</span>
+                            <div class="flex items-center">
+                                <span class="copy-feedback mr-2">Copied!</span>
+                                <button class="copy-btn" data-target="library-code-block" title="Copy source code"
+                                        style="position: static;">
+                                    <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                                </button>
+                                <img src="./icons/details-arrow.svg" alt="Details Arrow"
+                                     class="w-5 h-5 transition-transform transform details-arrow ml-2">
+                            </div>
+                        </summary>
+                        <div class="p-4 border-t border-gray-700">
+                            <pre id="library-code-block" class="overflow-y-auto text-sm"
+                                 style="white-space: pre-wrap; word-wrap: break-word; max-height: 20rem;"></pre>
+                        </div>
+                    </details>
+
+                    <div class="mt-12 mb-8">
+                        <label for="length-slider-2" class="block text-lg font-semibold text-white mb-2">Potency
+                            (Length) for Examples: <span id="length-value-2" class="font-bold text-green-400">12</span></label>
+                        <input id="length-slider-2" type="range" min="12" max="64" value="12" class="w-full">
+                    </div>
+
+                    <h3 class="text-2xl font-semibold text-white mb-4">Usage Examples</h3>
+                    <!-- Object Example -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Object</h4>
+                        <div class="code-block-wrapper mb-2">
+                            <div id="example-object-code" class="code-block"></div>
+                            <button class="copy-btn" data-target="example-object-code" title="Copy code">
+                                <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                        <div class="code-block-wrapper">
+                            <div id="example-object-output" class="code-block"></div>
+                        </div>
+                    </div>
+                    <!-- String Example -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">String</h4>
+                        <div class="code-block-wrapper mb-2">
+                            <div id="example-string-code" class="code-block"></div>
+                            <button class="copy-btn" data-target="example-string-code" title="Copy code">
+                                <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                        <div class="code-block-wrapper">
+                            <div id="example-string-output" class="code-block"></div>
+                        </div>
+                    </div>
+                    <!-- Array Example -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Array</h4>
+                        <div class="code-block-wrapper mb-2">
+                            <div id="example-array-code" class="code-block"></div>
+                            <button class="copy-btn" data-target="example-array-code" title="Copy code">
+                                <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                        <div class="code-block-wrapper">
+                            <div id="example-array-output" class="code-block"></div>
+                        </div>
+                    </div>
+                    <!-- Number Example -->
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Number</h4>
+                        <div class="code-block-wrapper mb-2">
+                            <div id="example-number-code" class="code-block"></div>
+                            <button class="copy-btn" data-target="example-number-code" title="Copy code">
+                                <img src="./icons/copy.svg" alt="Copy Icon" class="w-4 h-4">
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                        <div class="code-block-wrapper">
+                            <div id="example-number-output" class="code-block"></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <a href="https://github.com/divortio/divortio-hashIsh" target="_blank"
+                           class="w-full sm-w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-600 transition-all duration-300 inline-block">
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900/50 text-center py-8">
+        <div class="container mx-auto px-4 text-gray-500">
+            <p>Crafted with care in a smoke-free environment.</p>
+            <p class="text-sm mt-2">Not intended for cryptographic use. Please hash responsibly.</p>
+        </div>
+    </footer>
+</div>
+
+<script src="./js/main.js" type="module" defer></script>
+
+</body>
+</html>
