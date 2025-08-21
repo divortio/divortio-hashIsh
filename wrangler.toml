@@ -25,9 +25,6 @@ html = true
 css = true
 js = true
 
-[assets]
-binding = "ASSETS"
-directory = "./public"
 
 routes = [
     { pattern = "hashish.tools.divort.io", custom_domain = true }
