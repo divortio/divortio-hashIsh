@@ -1,5 +1,5 @@
 name = "divortio-hashish"
-main = "./src/index.mjs"
+main = "./src/worker.mjs"
 compatibility_date = "2025-08-01"
 
 # This binds the './public' directory to your Worker, making the assets
@@ -21,7 +21,6 @@ mode = "smart"
 [observability]
 enabled = true
 head_sampling_rate = 1
-
 
 [[routes]]
 pattern = "hashish.tools.divort.io"
