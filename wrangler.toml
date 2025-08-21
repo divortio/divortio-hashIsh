@@ -10,6 +10,7 @@ bucket = "./public"
 
 compatibility_flags = ["nodejs_compat", "nodejs_als"]
 
+minify = true
 workers_dev = false
 preview_urls = false
 
@@ -20,10 +21,6 @@ mode = "smart"
 enabled = true
 head_sampling_rate = 1
 
-[minify]
-html = true
-css = true
-js = true
 
 [[routes]]
 pattern = "hashish.tools.divort.io"
