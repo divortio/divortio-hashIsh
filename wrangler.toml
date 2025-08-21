@@ -6,7 +6,7 @@ compatibility_date = "2025-08-01"
 # available via the `env.ASSETS` service binding.
 [assets]
 binding = "ASSETS"
-bucket = "./public"
+directory = "./public"
 not_found_handling = "404-page"
 
 compatibility_flags = ["nodejs_compat", "nodejs_als"]
