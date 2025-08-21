@@ -1,6 +1,6 @@
-import hashIsh from '../../../divortio-pushID/public/hashIsh.js';
-import {initAnimation} from './animation.js';
-import serialize from '../../../divortio-pushID/public/serial.js'; // <-- Updated import path
+import hashIsh from './js/hashIsh.js';
+import {initAnimation} from './js/animation.js';
+import serialize from './js/serial.js'; // <-- Updated import path
 
 // --- hashIsh.js Library Source for Display ---
 const hashIshSourceCode = `

@@ -7,6 +7,7 @@ compatibility_date = "2025-08-01"
 [assets]
 binding = "ASSETS"
 bucket = "./public"
+not_found_handling = "404-page"
 
 compatibility_flags = ["nodejs_compat", "nodejs_als"]
 
@@ -26,13 +27,3 @@ head_sampling_rate = 1
 pattern = "hashish.tools.divort.io"
 custom_domain = true
 
-
-[[headers]]
-for = "/*"
-[headers.values]
-"Cache-Control" = "public, max-age=300, immutable"
-
-[[headers]]
-for = "*.html"
-[headers.values]
-"Cache-Control" = "public, max-age=120, immutable"
